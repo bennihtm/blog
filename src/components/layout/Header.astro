@@ -41,6 +41,8 @@ const isActive = (path: string) => {
 						class:list={[{ active: isActive(link.path) }]}
 						data-astro-prefetch
 						href={withBase(link.path)}
+						target={link.newTab ? "_blank" : undefined}
+  						rel={link.newTab ? "noopener noreferrer" : undefined}
 					>
 						<svg
 							aria-hidden="true"

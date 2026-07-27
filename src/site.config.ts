@@ -19,7 +19,7 @@ export const siteConfig: SiteConfig = {
 	title: "Benni's Blog",
 	hideThemeCredit: false,
 	profile: {
-		name: "Benjamin Hartmann",
+		name: "Benjamin",
 		email: "me@bennihtm.xyz",
 		github: "https://github.com/bennihtm",
 		avatar: "/avatar.png",
@@ -38,26 +38,27 @@ export const siteConfig: SiteConfig = {
 	// },
 };
 
-export const menuLinks: { path: string; title: string; icon: string }[] = [
+export const menuLinks: { path: string; title: string; icon: string; newTab?: boolean }[] = [
 	{
 		path: "/",
 		title: "Home",
-		icon: "lucide:house"
+		icon: "lucide:house",
 	},
 	{
 		path: "/posts/",
 		title: "Posts",
-		icon: "lucide:pen"
+		icon: "lucide:pen",
 	},
 	{
 		path: "/about/",
 		title: "About",
-		icon: "lucide:circle-user"
+		icon: "lucide:circle-user",
 	},
 	{
 		path: "https://notes.bennihtm.xyz",
 		title: "Notes",
-		icon: "lucide:leaf"
+		icon: "lucide:leaf",
+		newTab: true
 	},
 ];
 
