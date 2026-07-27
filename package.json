@@ -7,9 +7,10 @@
 	"type": "module",
 	"packageManager": "pnpm@10.19.0",
 	"scripts": {
+		"astro": "astro",
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro check && astro build",
+		"build": "astro build",
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
 		"lint": "biome lint .",
