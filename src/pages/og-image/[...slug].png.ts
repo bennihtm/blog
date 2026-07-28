@@ -1,7 +1,7 @@
 import JetBrainsMono from "@/assets/fonts/jetbrainsmono-regular.ttf";
-import NewsreaderItalic from "@/assets/fonts/newsreader-italic.ttf";
-import NewsreaderRegular from "@/assets/fonts/newsreader-regular.ttf";
-import NewsreaderSemiBold from "@/assets/fonts/newsreader-semibold.ttf";
+import InterItalic from "@/assets/fonts/Inter-Italic.ttf";
+import InterRegular from "@/assets/fonts/Inter-Regular.ttf";
+import InterSemiBold from "@/assets/fonts/Inter-SemiBold.ttf";
 import { getAllPosts } from "@/data/post";
 import { siteConfig } from "@/site-config";
 import { formatBylineDate, formatEyebrowDate } from "@/utils/date";
@@ -13,9 +13,9 @@ import { html } from "satori-html";
 
 const ogOptions: SatoriOptions = {
 	fonts: [
-		{ data: Buffer.from(NewsreaderRegular), name: "Newsreader", style: "normal", weight: 400 },
-		{ data: Buffer.from(NewsreaderSemiBold), name: "Newsreader", style: "normal", weight: 600 },
-		{ data: Buffer.from(NewsreaderItalic), name: "Newsreader", style: "italic", weight: 400 },
+		{ data: Buffer.from(InterRegular), name: "Inter", style: "normal", weight: 400 },
+		{ data: Buffer.from(InterSemiBold), name: "Inter", style: "normal", weight: 600 },
+		{ data: Buffer.from(InterItalic), name: "Inter", style: "italic", weight: 400 },
 		{ data: Buffer.from(JetBrainsMono), name: "JetBrains Mono", style: "normal", weight: 400 },
 	],
 	height: 630,
