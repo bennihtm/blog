@@ -1,6 +1,6 @@
 ---
 title: About
-description: A short introduction. Replace this in src/content/page/about.md.
+description: A short .introduction. Replace this in src/content/page/about.md
 ---
 
 This is the About page. It's a markdown file at `src/content/page/about.md` — edit it freely. The shape is intentionally unstructured so you can write a paragraph, a list, a CV, or whatever fits.
