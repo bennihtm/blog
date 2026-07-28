@@ -48,6 +48,8 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 />
 
 <PageLayout meta={{ title: "Home", description: siteConfig.description }}>
+	<div class="hero-wrapper">
+	<img class="avatar" src="/avatar.png">
 	<section class="hero">
 		<p>{siteConfig.description}</p>
 		<div class="socials">
@@ -72,7 +74,7 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 			<a href={withBase("/rss.xml")}>RSS</a>
 		</div>
 	</section>
-
+</div>
 	<section class="writing" aria-labelledby="writing-label">
 		<div class="section-label" id="writing-label">Writing</div>
 		<div class="timeline">
@@ -138,7 +140,16 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 
 <style>
 	/* ---------- Hero ---------- */
+	.hero-wrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 2rem;
+	margin-bottom: 76px;
+	}
+
 	.hero {
+		flex: 1;
+		margin-bottom: 0; /* moved to wrapper */
 		margin-bottom: 76px;
 	}
 	.hero p {
@@ -150,6 +161,34 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 		text-wrap: pretty;
 		white-space: pre-line;
 	}
+	/* --------- Avatar ----------*/
+
+	.avatar {
+		width: 120px;
+		height: 120px;
+		border-radius: 1rem;
+		flex-shrink: 0;
+		object-fit: cover;
+	}
+
+	/* avatar mobile */
+	@media (max-width: 720px) {
+	.hero-wrapper {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 1.5rem;
+	}
+
+	.hero {
+		margin-bottom: 56px;
+	}
+
+	.hero p {
+		max-width: 100%;
+	}
+	}
+
 	.socials {
 		font-family: var(--font-sans);
 		font-size: 13.5px;

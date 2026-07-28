@@ -116,7 +116,7 @@ public/                 # static assets served at site root
 
 ## Theming
 
-Design tokens are CSS variables at the top of `src/styles/global.css`: accent colour, hairlines, surfaces, fonts. The
+Design tokens are CSS variables at the top of `src/styles/global.css`: accent colour, hairline, surfaces, fonts.s The
 light and dark variants are gated by `[data-theme="light"]` and `[data-theme="dark"]` on the `<html>` element, so
 swapping them is a single re-render with no script.
 
@@ -151,6 +151,7 @@ Use `.gitattributes` with a `merge=ours` driver on personal-content paths (e.g. 
 `src/site.config.ts`, `public/avatar.png`) to keep your changes through the merge.
 
 ## Credits
+Theme adapted from [astro-sienna](https://github.com/anjay-goel/astro-sienna).
 
 Originally forked from [astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus)
 by [Chris Williams](https://github.com/chrismwilliams), then heavily revamped into its current form.
