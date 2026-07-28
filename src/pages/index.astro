@@ -7,6 +7,8 @@ import { siteConfig } from "@/site-config";
 import { formatRailDate, formatStampDate } from "@/utils/date";
 import { absoluteUrl, withBase } from "@/utils/path";
 import { Schema } from "astro-seo-schema";
+import { Image } from 'astro:assets';
+import avatar from "../assets/avatar.png";
 
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts);
@@ -49,7 +51,7 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 
 <PageLayout meta={{ title: "Home", description: siteConfig.description }}>
 	<div class="hero-wrapper">
-	<img class="avatar" src="/avatar.png">
+	<Image class="avatar" src={avatar} alt="Avatar"/>
 	<section class="hero">
 		<p>{siteConfig.description}</p>
 		<div class="socials">
