@@ -1,6 +1,10 @@
 ---
-title: "Hello, world"
-publishDate: 2026-07-28
-description: "A little bit about who I am, what I do and what this place is"
+title: "hello world"
+publishDate: 2026-07-29
+description: "hallo welt"
 ---
-Hey :) 
+hello! this is my blog. glad to have you here.
+
+feel free to look around. hope what you find helps you or at least makes you smile.
+
+jesus loves you.
