@@ -31,6 +31,7 @@
 		"@iconify-json/lucide": "^1.2.120",
 		"@playform/compress": "^0.2.3",
 		"astro": "7.1.4",
+		"astro-embed": "^0.13.1",
 		"astro-expressive-code": "^0.44.1",
 		"astro-robots-txt": "^1.0.0",
 		"astro-seo-schema": "^7.0.0",
