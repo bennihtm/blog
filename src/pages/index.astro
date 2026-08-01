@@ -57,7 +57,7 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 		<div class="socials">
 			{profile?.github && (
 				<>
-					<a href={profile.github} rel="noreferrer" target="_blank">GitHub</a>
+					<a href={profile.github} rel="noreferrer" target="_blank" rel="me">GitHub</a>
 					<span class="sep">·</span>
 				</>
 			)}
@@ -69,7 +69,7 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 			)}
 			{profile?.email && (
 				<>
-					<a href={`mailto:${profile.email}`}>Email</a>
+					<a href={`mailto:${profile.email}`} rel="me">Email</a>
 					<span class="sep">·</span>
 				</>
 			)}
