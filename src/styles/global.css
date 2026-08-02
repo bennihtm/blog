@@ -1,6 +1,5 @@
 /* `@import` must precede all other rules. */
 @import "@fontsource-variable/inter/wght.css";
-@import '@fontsource-variable/space-grotesk/wght.css';
 @import "@fontsource-variable/jetbrains-mono/wght.css";
 @import "katex/dist/katex.min.css";
 @import "tailwindcss";
@@ -22,7 +21,7 @@
 
 @layer base {
 	:root {
-		--font-serif: "Space Grotesk Variable", Georgia, serif;
+		--font-serif: "Inter Variable", serif;
 		--font-sans: "Inter Variable", -apple-system, system-ui, sans-serif;
 		--font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
 
