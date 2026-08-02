@@ -20,8 +20,8 @@ export default {
 				textMuted: "hsl(var(--theme-text-muted) / <alpha-value>)",
 			},
 			fontFamily: {
-				sans: ["Inter Variable", ...defaultTheme.fontFamily.sans],
-				serif: ["Space Grotesk Variable", ...defaultTheme.fontFamily.serif],
+				sans: ["Inter", ...defaultTheme.fontFamily.sans],
+				serif: [...defaultTheme.fontFamily.serif],
 			},
 			transitionProperty: {
 				height: "height",
