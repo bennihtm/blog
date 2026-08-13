@@ -22,6 +22,7 @@ export const siteConfig: SiteConfig = {
 		name: "Benjamin",
 		email: "me@bennihtm.xyz",
 		github: "https://github.com/bennihtm",
+		mastodon: "https://social.vivaldi.net/@bennihtm",
 		avatar: "/avatar.png",
 	},
 	// Uncomment & fill in to enable Giscus comments on every post.
