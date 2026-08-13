@@ -1,0 +1,26 @@
+---
+import { getAllPages } from "@/data/page";
+import PageLayout from "@/layouts/Page.astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import { render } from "astro:content";
+
+export const getStaticPaths = (async () => {
+	const pageEntries = await getAllPages();
+	// Exclude "about" if about.astro handles it explicitly
+	return pageEntries
+		.filter((entry) => entry.id !== "about")
+		.map((entry) => ({
+			params: { slug: entry.id },
+			props: { entry },
+		}));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<PageLayout page={entry}>
+	<Content />
+</PageLayout>

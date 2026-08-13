@@ -8,3 +8,7 @@ check back later to find out more about me, or contact me [by email](mailto:me@b
 
 
 if you need to contact me about something private and can't use Signal, you can may the following GPG key: [79060D46B1EC87A5BDE5F20791EF97FDA4EBBCFE](https://keys.openpgp.org/vks/v1/by-fingerprint/79060D46B1EC87A5BDE5F20791EF97FDA4EBBCFE) (also published via [wkd](https://www.webkeydirectory.com/what-is-wkd), so your email client might've automatically fetched it already!)
+
+## **My avatar**
+
+The guy on the homepage and the one [here](https://bennihtm.xyz/avatar.png) is courtesy of my friend [depthOblivious](https://linktr.ee/depthoblivious). Check him out, he does dope stuff.

@@ -1,0 +1,272 @@
+---
+import BaseLayout from "./Base.astro";
+import type { SiteMeta } from "@/types";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	meta?: SiteMeta;
+	title?: string;
+	description?: string;
+	ogImage?: string;
+	page?: CollectionEntry<"page">;
+}
+
+const { page, title: propTitle, description: propDescription, ogImage: propOgImage, meta: propMeta } = Astro.props;
+
+const title = propMeta?.title ?? propTitle ?? page?.data.title ?? "";
+const description = propMeta?.description ?? propDescription ?? page?.data.description;
+const ogImage = propMeta?.ogImage ?? propOgImage;
+
+const meta: SiteMeta = propMeta ?? {
+	title,
+	description,
+	ogImage,
+};
+---
+
+<BaseLayout meta={meta}>
+	<div class="page-shell">
+		<article class="page-main" data-pagefind-body>
+			{title && (
+				<header class="page-header">
+					<h1 class="page-title">{title}</h1>
+				</header>
+			)}
+
+			<div class="page-content">
+				<slot />
+			</div>
+		</article>
+	</div>
+</BaseLayout>
+
+<style>
+	.page-shell {
+		display: block;
+		position: relative;
+		margin-bottom: 64px;
+	}
+
+	.page-header {
+		margin-bottom: 32px;
+	}
+
+	.page-title {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: clamp(28px, 5.5vw, 42px);
+		letter-spacing: -0.022em;
+		line-height: 1.15;
+		color: hsl(var(--theme-text));
+		margin: 0;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	@media (max-width: 720px) {
+		.page-shell {
+			margin-bottom: 48px;
+		}
+		.page-header {
+			margin-bottom: 24px;
+		}
+		.page-title {
+			font-size: 30px;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.page-title {
+			font-size: 26px;
+		}
+	}
+</style>
+
+<style is:global>
+	.page-content {
+		font-family: var(--font-serif);
+		font-size: 17.5px;
+		line-height: 1.75;
+		color: hsl(var(--theme-text));
+		max-width: var(--reading-width);
+	}
+
+	.page-content > p {
+		margin: 0 0 22px;
+		text-wrap: pretty;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+	.page-content > p:last-child {
+		margin-bottom: 0;
+	}
+
+	.page-content h1 {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: 32px;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: hsl(var(--theme-text));
+		margin: 48px 0 20px;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+	.page-content h2 {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: 26px;
+		line-height: 1.22;
+		letter-spacing: -0.014em;
+		color: hsl(var(--theme-text));
+		margin: 44px 0 18px;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+	.page-content h3 {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: 20px;
+		line-height: 1.3;
+		letter-spacing: -0.005em;
+		color: hsl(var(--theme-text));
+		margin: 36px 0 14px;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+	.page-content h4 {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: 17.5px;
+		line-height: 1.35;
+		color: hsl(var(--theme-text));
+		margin: 28px 0 12px;
+	}
+
+	.page-content a {
+		color: hsl(var(--theme-text));
+		text-decoration: underline;
+		text-decoration-color: hsl(var(--theme-text) / 0.35);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 3px;
+		word-break: break-word;
+		overflow-wrap: anywhere;
+		transition: color 0.2s ease, text-decoration-color 0.2s ease;
+	}
+	.page-content a:hover {
+		color: hsl(var(--theme-accent));
+		text-decoration-color: hsl(var(--theme-accent));
+	}
+	.page-content a:focus-visible {
+		outline: 2px solid hsl(var(--theme-accent));
+		outline-offset: 3px;
+		border-radius: 3px;
+	}
+
+	.page-content ul {
+		list-style: disc;
+		list-style-position: inside;
+		margin: 0 0 28px;
+		padding: 0;
+	}
+	.page-content ul li {
+		margin-bottom: 6px;
+		text-wrap: pretty;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+	.page-content ul li:last-child {
+		margin-bottom: 0;
+	}
+
+	.page-content ol {
+		list-style: decimal;
+		margin: 0 0 28px;
+		padding-left: 22px;
+	}
+	.page-content ol li {
+		margin-bottom: 6px;
+		padding-left: 6px;
+		text-wrap: pretty;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+	}
+
+	.page-content blockquote {
+		margin: 28px 0;
+		padding: 4px 0 4px 22px;
+		border-left: 2px solid hsl(var(--theme-accent));
+		font-style: italic;
+		color: hsl(var(--theme-text-muted));
+		font-size: 18px;
+		line-height: 1.65;
+	}
+
+	.page-content :not(pre) > code {
+		font-family: var(--font-mono);
+		font-size: 14.5px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		padding: 1px 6px;
+		border-radius: 3px;
+		color: hsl(var(--theme-text-muted));
+	}
+
+	.page-content pre {
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 4px;
+		padding: 16px;
+		margin: 28px 0;
+		overflow-x: auto;
+		font-size: 14px;
+		line-height: 1.7;
+	}
+
+	.page-content img,
+	.page-content video {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		border: 1px solid var(--hairline);
+		background: var(--paper);
+		border-radius: 4px;
+		margin: 28px 0;
+	}
+
+	.page-content table {
+		width: 100%;
+		max-width: 100%;
+		border-collapse: collapse;
+		margin: 28px 0;
+		font-size: 15.5px;
+		font-family: var(--font-sans);
+	}
+	.page-content th,
+	.page-content td {
+		text-align: left;
+		padding: 8px 12px;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.page-content hr {
+		border: 0;
+		height: 1px;
+		background: var(--hairline);
+		margin: 40px 0;
+	}
+
+	@media (max-width: 720px) {
+		.page-content {
+			font-size: 17px;
+			line-height: 1.7;
+		}
+		.page-content h1 { font-size: 28px; margin: 40px 0 16px; }
+		.page-content h2 { font-size: 23px; margin: 36px 0 14px; }
+	}
+	@media (max-width: 420px) {
+		.page-content {
+			font-size: 16.5px;
+		}
+	}
+</style>
