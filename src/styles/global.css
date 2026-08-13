@@ -2,6 +2,7 @@
 @import "@fontsource-variable/inter/wght.css";
 @import "@fontsource-variable/jetbrains-mono/wght.css";
 @import "katex/dist/katex.min.css";
+@import "@pagefind/component-ui/css";
 @import "tailwindcss";
 
 @config "../../tailwind.config.ts";
@@ -29,6 +30,27 @@
 		--reading-width: 64ch;          /* article body & long prose blocks */
 		--rail-width: 110px;            /* left date column on timeline lists */
 		--rail-gap: 36px;               /* gap between rail and post body */
+
+		/* Pagefind UI Design Tokens */
+		--pf-font: var(--font-sans);
+		--pf-background: var(--paper);
+		--pf-text: hsl(var(--theme-text));
+		--pf-text-secondary: hsl(var(--theme-text-muted));
+		--pf-text-muted: var(--faint);
+		--pf-border: var(--hairline);
+		--pf-border-focus: hsl(var(--theme-accent));
+		--pf-skeleton: var(--hairline);
+		--pf-skeleton-shine: var(--paper);
+		--pf-hover: var(--accent-soft);
+		--pf-mark: hsl(var(--theme-accent));
+		--pf-outline-focus: hsl(var(--theme-accent));
+		--pf-border-radius: 6px;
+		--pf-input-height: 42px;
+		--pf-modal-max-width: 640px;
+		--pf-modal-backdrop: rgba(0, 0, 0, 0.45);
+		--pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+		--pf-shadow-md: 0 6px 16px rgba(0, 0, 0, 0.08);
+		--pf-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.15);
 	}
 
 	:root,
@@ -79,7 +101,60 @@
 		--aside-important: 284deg 34% 74%;  /* plum */
 		--aside-caution: 42deg 72% 62%;     /* amber */
 		--aside-warning: 9deg 68% 66%;      /* red */
+
+		--pf-modal-backdrop: rgba(0, 0, 0, 0.75);
+		--pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+		--pf-shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4);
+		--pf-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
 	}
+}
+
+/* Pagefind Component UI Overrides */
+pagefind-modal dialog.pf-modal {
+	background: var(--paper);
+	border: 1px solid var(--hairline);
+	box-shadow: var(--pf-shadow-lg);
+}
+
+pagefind-modal-header {
+	border-bottom-color: var(--hairline);
+}
+
+pagefind-modal-footer {
+	border-top-color: var(--hairline);
+}
+
+pagefind-modal-header .pf-input-wrapper input.pf-input,
+pagefind-searchbox .pf-searchbox-input {
+	font-family: var(--font-sans);
+	background: var(--paper);
+	color: hsl(var(--theme-text));
+	border-color: var(--hairline);
+}
+
+pagefind-modal-header .pf-input-wrapper input.pf-input:focus,
+pagefind-searchbox .pf-searchbox-input:focus {
+	border-color: hsl(var(--theme-accent));
+}
+
+.pf-result-card,
+.pf-searchbox-result {
+	background: var(--paper);
+	border-color: var(--hairline);
+}
+
+.pf-result-title,
+.pf-searchbox-result-title {
+	font-family: var(--font-serif);
+	font-weight: 500;
+}
+
+.pf-result-excerpt mark,
+.pf-searchbox-result-excerpt mark {
+	background: var(--accent-soft-strong);
+	color: hsl(var(--theme-accent));
+	padding: 0 2px;
+	border-radius: 2px;
 }
 
 /* Shared component utilities — hoisted from page-scoped styles. */
