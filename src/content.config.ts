@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 function removeDupsAndLowerCase(array: string[]) {
@@ -18,19 +19,13 @@ const post = defineCollection({
 					src: image(),
 				})
 				.optional(),
-			description: z.string().min(10).max(160),
+			description: z.string().min(1).max(160),
 			draft: z.boolean().default(false),
 			ogImage: z.string().optional(),
-			publishDate: z
-				.string()
-				.or(z.date())
-				.transform((val) => new Date(val)),
+			publishDate: z.coerce.date(),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			title: z.string().max(120),
-			updatedDate: z
-				.string()
-				.optional()
-				.transform((str) => (str ? new Date(str) : undefined)),
+			updatedDate: z.coerce.date().optional(),
 		}),
 });
 

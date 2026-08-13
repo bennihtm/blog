@@ -89,20 +89,3 @@ const goatcounter = analytics?.goatcounterUrl;
     }
 
 <meta content={Astro.generator} name="generator"/>
-
-{gaId && (
-    <>
-        <script is:inline type="text/partytown" async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script is:inline type="text/partytown" set:html={`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${gaId}');
-`}></script>
-    </>
-)}
-{goatcounter && (
-    <script is:inline type="text/partytown" data-goatcounter={goatcounter}
-            async src="//gc.zgo.at/count.js"></script>
-)}
-

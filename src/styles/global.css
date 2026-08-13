@@ -21,7 +21,7 @@
 
 @layer base {
 	:root {
-		--font-serif: "Inter Variable", Georgia, serif;
+		--font-serif: "Inter Variable", serif;
 		--font-sans: "Inter Variable", -apple-system, system-ui, sans-serif;
 		--font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
 

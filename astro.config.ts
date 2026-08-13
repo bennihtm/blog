@@ -10,7 +10,6 @@ import { unified } from "@astrojs/markdown-remark";
 import { defineConfig } from "astro/config";
 import { expressiveCodeOptions } from "./src/site.config";
 import { siteConfig } from "./src/site.config";
-import partytown from "@astrojs/partytown";
 
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
@@ -39,11 +38,6 @@ export default defineConfig({
 		inlineStylesheets: "always",
 	},
 	integrations: [
-		partytown({
-			config: {
-				forward: ["dataLayer.push"],
-			},
-		}),
 		expressiveCode(expressiveCodeOptions),
 		icon(),
 		sitemap({
