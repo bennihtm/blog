@@ -57,19 +57,19 @@ const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
 		<div class="socials">
 			{profile?.mastodon && (
 				<>
-					<a href={profile.mastodon} rel="noreferrer" target="_blank" rel="me">Mastodon</a>
+					<a href={profile.mastodon} rel="me noreferrer" target="_blank">Mastodon</a>
 					<span class="sep">·</span>
 				</>
 			)}
 			{profile?.github && (
 				<>
-					<a href={profile.github} rel="noreferrer" target="_blank" rel="me">GitHub</a>
+					<a href={profile.github} rel="me noreferrer" target="_blank">GitHub</a>
 					<span class="sep">·</span>
 				</>
 			)}
 			{profile?.linkedin && (
 				<>
-					<a href={profile.linkedin} rel="noreferrer" target="_blank">LinkedIn</a>
+					<a href={profile.linkedin} rel="me noreferrer" target="_blank">LinkedIn</a>
 					<span class="sep">·</span>
 				</>
 			)}
