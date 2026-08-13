@@ -1,0 +1,60 @@
+---
+interface Props {
+	placeholder?: string;
+	maxResults?: number;
+	showSubResults?: boolean;
+	shortcut?: string;
+}
+
+const {
+	placeholder = "Search posts, topics, tags...",
+	maxResults = 10,
+	showSubResults = true,
+	shortcut = "/",
+} = Astro.props;
+---
+
+<pagefind-config bundle-path="/pagefind/"></pagefind-config>
+
+<div class="searchbox-wrapper">
+	<pagefind-searchbox
+		placeholder={placeholder}
+		max-results={maxResults}
+		show-sub-results={showSubResults ? "true" : "false"}
+		show-keyboard-hints="true"
+		shortcut={shortcut}
+	>
+	</pagefind-searchbox>
+</div>
+
+<script>
+	import "@pagefind/component-ui";
+
+	function syncTheme() {
+		const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+		const elements = document.querySelectorAll("pagefind-modal, pagefind-searchbox, pagefind-results");
+		elements.forEach((el) => {
+			if (currentTheme === "dark") {
+				el.setAttribute("data-pf-theme", "dark");
+			} else {
+				el.removeAttribute("data-pf-theme");
+			}
+		});
+	}
+
+	syncTheme();
+
+	const observer = new MutationObserver(() => syncTheme());
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
+</script>
+
+<style>
+	.searchbox-wrapper {
+		width: 100%;
+		max-width: 640px;
+		margin: 0 auto;
+	}
+</style>

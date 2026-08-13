@@ -1,0 +1,58 @@
+---
+import SearchBox from "@/components/SearchBox.astro";
+import PageLayout from "@/layouts/Base.astro";
+import { siteConfig } from "@/site-config";
+
+const siteUrl = (path: string) => new URL(path, Astro.site).toString();
+
+const meta = {
+	description: `Search all posts and articles on ${siteConfig.title}`,
+	title: "Search",
+};
+---
+
+<PageLayout meta={meta}>
+	<section class="search-section" aria-labelledby="search-label">
+		<div class="section-label" id="search-label">Search</div>
+		<p class="intro">
+			Search for anything across my blog - powered by <a href="https://pagefind.app/" target="_blank" rel="noopener noreferrer">Pagefind</a>.
+		</p>
+		<div class="search-container">
+			<SearchBox placeholder="Type to search..." maxResults={15} showSubResults={true} />
+		</div>
+	</section>
+</PageLayout>
+
+<style>
+	.search-section {
+		margin-bottom: 72px;
+	}
+	.intro {
+		font-family: var(--font-serif);
+		font-size: 17.5px;
+		line-height: 1.7;
+		color: hsl(var(--theme-text));
+		margin: 0 0 32px;
+		max-width: 60ch;
+		text-wrap: pretty;
+	}
+	.search-container {
+		margin-top: 16px;
+		align: left;
+	}
+
+	@media (max-width: 720px) {
+		.intro {
+			font-size: 17px;
+			margin-bottom: 24px;
+		}
+	}
+	@media (max-width: 420px) {
+		.search-section {
+			margin-bottom: 48px;
+		}
+		.intro {
+			font-size: 16.5px;
+		}
+	}
+</style>

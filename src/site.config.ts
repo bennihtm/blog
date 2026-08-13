@@ -55,6 +55,11 @@ export const menuLinks: { path: string; title: string; icon: string; newTab?: bo
 		icon: "lucide:leaf",
 		newTab: true
 	},
+		{
+		path: "/search/",
+		title: "Search",
+		icon: "lucide:search",
+	},
 ];
 
 export const expressiveCodeOptions: AstroExpressiveCodeOptions = {

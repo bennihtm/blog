@@ -1,0 +1,86 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	shortcut?: string;
+}
+
+const { shortcut = "/" } = Astro.props;
+---
+
+<pagefind-config bundle-path="/pagefind/"></pagefind-config>
+
+<div class="search-modal-wrapper">
+	<pagefind-modal-trigger shortcut={shortcut}>
+		<button type="button" class="search-modal-trigger-btn" aria-label="Open Search">
+			<Icon name="lucide:search" class="search-modal-icon" />
+			<span class="search-modal-text">Search</span>
+			<kbd class="search-modal-kbd">{shortcut}</kbd>
+		</button>
+	</pagefind-modal-trigger>
+</div>
+
+<pagefind-modal reset-on-close></pagefind-modal>
+
+<script>
+	import "@pagefind/component-ui";
+
+	function syncTheme() {
+		const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+		const elements = document.querySelectorAll(
+			"pagefind-modal, pagefind-searchbox, pagefind-results, pagefind-modal-trigger"
+		);
+		elements.forEach((el) => {
+			if (currentTheme === "dark") {
+				el.setAttribute("data-pf-theme", "dark");
+			} else {
+				el.removeAttribute("data-pf-theme");
+			}
+		});
+	}
+
+	syncTheme();
+
+	const observer = new MutationObserver(() => syncTheme());
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
+</script>
+
+<style>
+	.search-modal-wrapper {
+		display: inline-block;
+	}
+	.search-modal-trigger-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 5px 10px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		font-family: var(--font-sans);
+		font-size: 13px;
+		color: hsl(var(--theme-text) / 0.8);
+		cursor: pointer;
+		transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+	}
+	.search-modal-trigger-btn:hover {
+		border-color: hsl(var(--theme-accent));
+		color: hsl(var(--theme-accent));
+	}
+	.search-modal-icon {
+		width: 14px;
+		height: 14px;
+	}
+	.search-modal-kbd {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		padding: 1px 5px;
+		background: var(--accent-soft);
+		border: 1px solid var(--hairline);
+		border-radius: 3px;
+		color: hsl(var(--theme-accent));
+	}
+</style>
