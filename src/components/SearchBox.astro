@@ -12,9 +12,11 @@ const {
 	showSubResults = true,
 	shortcut = "/",
 } = Astro.props;
+
+const pagefindCacheTag = Date.now();
 ---
 
-<pagefind-config bundle-path="/pagefind/"></pagefind-config>
+<pagefind-config bundle-path="/pagefind/" meta-cache-tag={pagefindCacheTag}></pagefind-config>
 
 <div class="searchbox-wrapper">
 	<pagefind-searchbox
