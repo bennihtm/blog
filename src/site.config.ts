@@ -32,6 +32,12 @@ export const siteConfig: SiteConfig = {
 	// 	category: "General",
 	// 	categoryId: "...",
 	// },
+
+	// webmentions support
+	webmentions: {
+		link: "https://webmention.io/bennihtm.xyz/webmention",
+		pingback: "https://webmention.io/bennihtm.xyz/xmlrpc"
+	}
 };
 
 export const menuLinks: { path: string; title: string; icon: string; newTab?: boolean }[] = [
