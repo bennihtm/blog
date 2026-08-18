@@ -64,7 +64,7 @@
 		"@types/mdast": "^4.0.4",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.5.4",
-		"cssnano": "^8.0.5",
+		"cssnano": "^8.0.6",
 		"pagefind": "^1.5.2",
 		"prettier": "^3.9.6",
 		"prettier-plugin-astro": "0.14.1",
