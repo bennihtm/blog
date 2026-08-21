@@ -54,9 +54,9 @@ export const menuLinks: { path: string; title: string; icon: string; newTab?: bo
 		path: "https://notes.bennihtm.xyz",
 		title: "Notes",
 		icon: "lucide:leaf",
-		newTab: true
+		newTab: true,
 	},
-		{
+	{
 		path: "/search/",
 		title: "Search",
 		icon: "lucide:search",

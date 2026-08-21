@@ -139,9 +139,15 @@ main .gsc-comment > .gsc-replies {
 }
 
 /* Body font to match the site */
-main, main input, main textarea, main button, main select {
+main,
+main input,
+main textarea,
+main button,
+main select {
 	font-family: "Inter Variable", sans-serif;
 }
-main code, main pre, main .markdown code {
+main code,
+main pre,
+main .markdown code {
 	font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
 }

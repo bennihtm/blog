@@ -6,5 +6,4 @@ export interface ShowcaseItem {
 	desc: string;
 }
 
-export const showcase: ShowcaseItem[] = [
-];
+export const showcase: ShowcaseItem[] = [];

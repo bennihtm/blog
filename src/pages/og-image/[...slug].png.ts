@@ -99,8 +99,7 @@ export async function getStaticPaths() {
 	const items = await Promise.all(
 		filtered.map(async (post) => {
 			const { remarkPluginFrontmatter } = await render(post);
-			const readingTime =
-				(remarkPluginFrontmatter as { minutesRead?: string })?.minutesRead ?? "";
+			const readingTime = (remarkPluginFrontmatter as { minutesRead?: string })?.minutesRead ?? "";
 			return {
 				params: { slug: post.id },
 				props: {
