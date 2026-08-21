@@ -3,6 +3,7 @@ import { type CollectionEntry, render } from "astro:content";
 import { Image } from "astro:assets";
 
 import ShareButtons from "@/components/blog/ShareButtons.astro";
+import NewsletterCallout from "@/components/blog/NewsletterCallout.astro"
 import WebMentions from "@/components/blog/webmentions/index.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import { siteConfig } from "@/site-config";
@@ -125,6 +126,8 @@ const giscusThemes = import.meta.env.PROD
 			</article>
 
 			<ShareButtons title={title} url={postUrl} description={description} />
+
+			<NewsletterCallout />
 
 			<WebMentions />
 

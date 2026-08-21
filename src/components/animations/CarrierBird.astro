@@ -1,0 +1,798 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="carrier-bird-card" id="carrier-bird-card">
+	<div class="sky-scene" id="sky-scene" role="region" aria-label="Carrier bird flight animation">
+		<!-- Sky Elements: Sun/Moon glow & Clouds -->
+		<div class="sky-glow" aria-hidden="true"></div>
+		<div class="cloud cloud-1" aria-hidden="true"></div>
+		<div class="cloud cloud-2" aria-hidden="true"></div>
+		<div class="cloud cloud-3" aria-hidden="true"></div>
+
+		<!-- Wind gust trails -->
+		<svg class="wind-current wind-1" viewBox="0 0 160 40" fill="none" aria-hidden="true">
+			<path d="M0 20 Q 40 5, 80 20 T 160 20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-linecap="round" />
+		</svg>
+		<svg class="wind-current wind-2" viewBox="0 0 120 30" fill="none" aria-hidden="true">
+			<path d="M0 15 Q 30 5, 60 15 T 120 15" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3" stroke-linecap="round" />
+		</svg>
+
+		<!-- Interactive Carrier Bird -->
+		<div class="bird-flight-track" id="bird-flight-track">
+			<div class="bird-speech-bubble" id="bird-speech" aria-live="polite">
+				<span class="speech-text">Carrying your confirmation email! 💌</span>
+				<span class="speech-tail" aria-hidden="true"></span>
+			</div>
+
+			<button
+				type="button"
+				class="bird-actor"
+				id="bird-actor"
+				aria-label="Carrier bird delivering your newsletter confirmation. Click or tap to make it do a loop-the-loop!"
+				title="Click me to do a loop-the-loop!"
+			>
+				<!-- Bird Particles Container for burst particles -->
+				<div class="bird-particles-container" id="bird-particles" aria-hidden="true"></div>
+
+				<!-- Stylized Flying Carrier Bird SVG -->
+				<svg class="bird-svg" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<defs>
+						<linearGradient id="birdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stop-color="var(--bird-highlight, #fffdf8)" />
+							<stop offset="100%" stop-color="var(--bird-base, #ede4d1)" />
+						</linearGradient>
+						<linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stop-color="var(--wing-highlight, #ffffff)" />
+							<stop offset="100%" stop-color="var(--wing-base, #dfd3bd)" />
+						</linearGradient>
+						<linearGradient id="envelopeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stop-color="#fffdf8" />
+							<stop offset="100%" stop-color="#f1e6d0" />
+						</linearGradient>
+					</defs>
+
+					<!-- Flight trail sparkles -->
+					<g class="flight-sparkles">
+						<circle class="sparkle sparkle-1" cx="15" cy="56" r="2.5" fill="hsl(var(--theme-accent))" />
+						<circle class="sparkle sparkle-2" cx="6" cy="62" r="1.8" fill="hsl(var(--theme-accent))" />
+						<circle class="sparkle sparkle-3" cx="22" cy="68" r="1.2" fill="hsl(var(--theme-accent))" />
+					</g>
+
+					<!-- Back Wing (Layered behind body) -->
+					<g class="wing-back">
+						<path
+							d="M 58 45 C 50 25, 38 12, 28 8 C 24 6, 26 14, 32 24 C 38 34, 46 42, 54 48 Z"
+							fill="url(#wingGrad)"
+							stroke="var(--bird-stroke, #a89a82)"
+							stroke-width="1.5"
+							stroke-linejoin="round"
+							opacity="0.85"
+						/>
+						<!-- Wing feather detail -->
+						<path d="M 34 16 C 38 24, 44 32, 50 40" stroke="var(--bird-stroke, #a89a82)" stroke-width="1" opacity="0.6" />
+					</g>
+
+					<!-- Tail Feathers -->
+					<g class="bird-tail">
+						<path
+							d="M 42 56 C 28 60, 14 66, 6 72 C 16 64, 26 58, 38 52 Z"
+							fill="url(#birdGrad)"
+							stroke="var(--bird-stroke, #a89a82)"
+							stroke-width="1.5"
+							stroke-linejoin="round"
+						/>
+						<path
+							d="M 40 54 C 24 56, 12 60, 4 64 C 15 57, 26 52, 38 50 Z"
+							fill="url(#wingGrad)"
+							stroke="var(--bird-stroke, #a89a82)"
+							stroke-width="1.5"
+							stroke-linejoin="round"
+						/>
+					</g>
+
+					<!-- Bird Body -->
+					<g class="bird-body-group">
+						<!-- Main torso & head -->
+						<path
+							d="M 40 50 C 42 42, 52 36, 68 36 C 82 36, 96 40, 106 48 C 114 54, 116 62, 108 68 C 96 76, 74 74, 56 68 C 46 63, 40 56, 40 50 Z"
+							fill="url(#birdGrad)"
+							stroke="var(--bird-stroke, #a89a82)"
+							stroke-width="1.8"
+							stroke-linejoin="round"
+						/>
+						<!-- Soft breast gradient / shading -->
+						<path
+							d="M 64 42 C 78 42, 94 48, 102 56 C 96 66, 78 72, 60 67 C 54 64, 52 56, 64 42 Z"
+							fill="hsl(var(--theme-accent) / 0.12)"
+						/>
+
+						<!-- Cute Eye -->
+						<circle cx="102" cy="50" r="3" fill="hsl(var(--theme-text))" />
+						<circle cx="103" cy="49" r="1" fill="#ffffff" />
+
+						<!-- Beak -->
+						<path
+							d="M 112 52 L 126 55 L 112 58 Z"
+							fill="#e28743"
+							stroke="#b25d20"
+							stroke-width="1.2"
+							stroke-linejoin="round"
+						/>
+					</g>
+
+					<!-- Hanging Letter Envelope held in Beak -->
+					<g class="hanging-letter">
+						<!-- Ribbon / String from beak to envelope -->
+						<path d="M 118 55 Q 119 63, 114 69" stroke="#b25d20" stroke-width="1.5" stroke-linecap="round" />
+
+						<!-- Envelope body -->
+						<g transform="translate(98, 68) rotate(-6)">
+							<rect
+								x="0"
+								y="0"
+								width="28"
+								height="19"
+								rx="2"
+								fill="url(#envelopeGrad)"
+								stroke="hsl(var(--theme-accent))"
+								stroke-width="1.4"
+							/>
+							<!-- Envelope flap lines -->
+							<path d="M 0 0 L 14 11 L 28 0" stroke="hsl(var(--theme-accent))" stroke-width="1.2" fill="none" />
+							<path d="M 0 19 L 10 10" stroke="hsl(var(--theme-accent) / 0.4)" stroke-width="1" />
+							<path d="M 28 19 L 18 10" stroke="hsl(var(--theme-accent) / 0.4)" stroke-width="1" />
+
+							<!-- Heart Wax Seal -->
+							<circle cx="14" cy="11" r="3.8" fill="hsl(var(--theme-accent))" />
+							<!-- Tiny Heart icon in seal -->
+							<path
+								d="M 14 12.8 C 14 12.8 11.8 11.4 11.8 10.2 C 11.8 9.5 12.3 9 13 9 C 13.5 9 13.8 9.3 14 9.6 C 14.2 9.3 14.5 9 15 9 C 15.7 9 16.2 9.5 16.2 10.2 C 16.2 11.4 14 12.8 14 12.8 Z"
+								fill="#ffffff"
+							/>
+						</g>
+					</g>
+
+					<!-- Front Wing (flapping foreground wing) -->
+					<g class="wing-front">
+						<path
+							d="M 62 52 C 60 30, 48 10, 36 4 C 30 1, 32 12, 40 26 C 48 40, 58 50, 70 54 Z"
+							fill="url(#wingGrad)"
+							stroke="var(--bird-stroke, #a89a82)"
+							stroke-width="1.8"
+							stroke-linejoin="round"
+						/>
+						<!-- Primary wing feather details -->
+						<path d="M 44 14 C 50 24, 58 36, 64 46" stroke="var(--bird-stroke, #a89a82)" stroke-width="1.2" opacity="0.65" />
+						<path d="M 52 24 C 56 32, 62 40, 67 48" stroke="var(--bird-stroke, #a89a82)" stroke-width="1" opacity="0.5" />
+					</g>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<!-- Interactive Flight Controller & Cheerful Info Bar -->
+	<div class="flight-status-bar">
+		<div class="flight-status-info">
+			<span class="flight-pulse-dot" aria-hidden="true"></span>
+			<span class="flight-status-text"><strong>Carrier pigeon status:</strong> In flight to your inbox</span>
+		</div>
+		<button type="button" class="cheer-bird-btn" id="cheer-bird-btn">
+			<Icon name="lucide:sparkles" class="cheer-btn-icon" aria-hidden="true" />
+			<span>Cheer on the bird!</span>
+		</button>
+	</div>
+</div>
+
+<script>
+	function setupCarrierBird() {
+		const birdBtn = document.getElementById("bird-actor");
+		const cheerBtn = document.getElementById("cheer-bird-btn");
+		const speechBubble = document.getElementById("bird-speech");
+		const particlesContainer = document.getElementById("bird-particles");
+
+		if (!birdBtn || !speechBubble || !particlesContainer) return;
+
+		const cheerfulQuotes = [
+			"♫ Tweet! Flapping full speed to your inbox! 🕊️",
+			"♫ Loop-de-loop! Doing aerial flips with your email! 💫",
+			"♫ Chirp! Fresh writing safely tucked in the letter! 💌",
+			"♫ Wheeee! Watch this 360° spin! ✨",
+			"♫ Almost there! Grab your favorite tea while I fly! ☕",
+			"♫ Delivering with extra love and zero spam! 🌿",
+			"♫ Tweet tweet! Look at me glide! 🪶",
+		];
+
+		let quoteIndex = 0;
+		let isAnimating = false;
+
+		function triggerBirdStunt() {
+			if (isAnimating) return;
+			isAnimating = true;
+
+			// Add dynamic stunt animation
+			birdBtn.classList.remove("stunt-flip");
+			// Force reflow
+			void birdBtn.offsetWidth;
+			birdBtn.classList.add("stunt-flip");
+
+			// Update speech bubble text with smooth fade
+			speechBubble.classList.add("speech-pop");
+			quoteIndex = (quoteIndex + 1) % cheerfulQuotes.length;
+			const textSpan = speechBubble.querySelector(".speech-text");
+			if (textSpan) {
+				textSpan.textContent = cheerfulQuotes[quoteIndex];
+			}
+
+			// Spawn floating particle icons
+			spawnBirdParticles();
+
+			setTimeout(() => {
+				birdBtn.classList.remove("stunt-flip");
+				speechBubble.classList.remove("speech-pop");
+				isAnimating = false;
+			}, 900);
+		}
+
+		function spawnBirdParticles() {
+			const emojis = ["❤️", "✨", "🪶", "♫", "💌", "⭐"];
+			const count = 7;
+
+			for (let i = 0; i < count; i++) {
+				const p = document.createElement("span");
+				p.className = "floating-particle";
+				p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+				// Random dispersion
+				const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+				const distance = 25 + Math.random() * 45;
+				const tx = Math.cos(angle) * distance;
+				const ty = Math.sin(angle) * distance - 20;
+
+				p.style.setProperty("--tx", `${tx}px`);
+				p.style.setProperty("--ty", `${ty}px`);
+				p.style.setProperty("--rot", `${(Math.random() - 0.5) * 60}deg`);
+
+				particlesContainer.appendChild(p);
+
+				setTimeout(() => {
+					p.remove();
+				}, 1000);
+			}
+		}
+
+		birdBtn.addEventListener("click", triggerBirdStunt);
+		if (cheerBtn) {
+			cheerBtn.addEventListener("click", triggerBirdStunt);
+		}
+	}
+
+	// Initialize on page load and view transitions
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", setupCarrierBird);
+	} else {
+		setupCarrierBird();
+	}
+	document.addEventListener("astro:page-load", setupCarrierBird);
+</script>
+
+<style>
+	:root {
+		--bird-highlight: #ffffff;
+		--bird-base: #f0e7d5;
+		--wing-highlight: #ffffff;
+		--wing-base: #e2d6be;
+		--bird-stroke: #9d8e75;
+	}
+
+	:root[data-theme="dark"] {
+		--bird-highlight: #e8ded2;
+		--bird-base: #c2b59f;
+		--wing-highlight: #f3ede2;
+		--wing-base: #ab9d85;
+		--bird-stroke: #665b4c;
+	}
+
+	.carrier-bird-card {
+		margin: 24px 0 36px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+		transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+	}
+
+	.sky-scene {
+		position: relative;
+		height: 180px;
+		width: 100%;
+		background: linear-gradient(180deg, hsl(var(--theme-accent) / 0.08) 0%, var(--paper) 100%);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		user-select: none;
+	}
+
+	/* Sky ambient glow */
+	.sky-glow {
+		position: absolute;
+		top: -40px;
+		right: 15%;
+		width: 140px;
+		height: 140px;
+		border-radius: 50%;
+		background: radial-gradient(circle, hsl(var(--theme-accent) / 0.16) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	/* Drifting Clouds */
+	.cloud {
+		position: absolute;
+		background: hsl(var(--theme-text) / 0.05);
+		border-radius: 100px;
+		pointer-events: none;
+	}
+
+	.cloud::before,
+	.cloud::after {
+		content: "";
+		position: absolute;
+		background: inherit;
+		border-radius: 50%;
+	}
+
+	.cloud-1 {
+		width: 90px;
+		height: 28px;
+		top: 24px;
+		left: -100px;
+		animation: drift-clouds 28s linear infinite;
+	}
+	.cloud-1::before {
+		width: 36px;
+		height: 36px;
+		top: -16px;
+		left: 16px;
+	}
+	.cloud-1::after {
+		width: 24px;
+		height: 24px;
+		top: -10px;
+		left: 44px;
+	}
+
+	.cloud-2 {
+		width: 120px;
+		height: 32px;
+		bottom: 30px;
+		left: -140px;
+		animation: drift-clouds 36s linear infinite 12s;
+		opacity: 0.6;
+	}
+	.cloud-2::before {
+		width: 48px;
+		height: 48px;
+		top: -22px;
+		left: 20px;
+	}
+	.cloud-2::after {
+		width: 32px;
+		height: 32px;
+		top: -14px;
+		left: 60px;
+	}
+
+	.cloud-3 {
+		width: 70px;
+		height: 22px;
+		top: 48px;
+		left: -80px;
+		animation: drift-clouds 22s linear infinite 6s;
+		opacity: 0.45;
+	}
+	.cloud-3::before {
+		width: 26px;
+		height: 26px;
+		top: -12px;
+		left: 12px;
+	}
+
+	@keyframes drift-clouds {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(calc(100vw + 300px));
+		}
+	}
+
+	/* Wind currents */
+	.wind-current {
+		position: absolute;
+		color: hsl(var(--theme-text) / 0.12);
+		pointer-events: none;
+	}
+
+	.wind-1 {
+		top: 35px;
+		left: 15%;
+		width: 140px;
+		animation: wind-flow 8s ease-in-out infinite;
+	}
+
+	.wind-2 {
+		bottom: 25px;
+		right: 18%;
+		width: 100px;
+		animation: wind-flow 6s ease-in-out infinite 3s;
+	}
+
+	@keyframes wind-flow {
+		0%, 100% {
+			opacity: 0.2;
+			transform: translateX(0);
+		}
+		50% {
+			opacity: 0.6;
+			transform: translateX(18px);
+		}
+	}
+
+	/* Bird Flight Track */
+	.bird-flight-track {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		z-index: 2;
+		animation: bird-glider 4.5s ease-in-out infinite;
+	}
+
+	@keyframes bird-glider {
+		0%, 100% {
+			transform: translateY(0px) rotate(0deg);
+		}
+		25% {
+			transform: translateY(-8px) rotate(-1.5deg);
+		}
+		75% {
+			transform: translateY(6px) rotate(1deg);
+		}
+	}
+
+	/* Speech Bubble */
+	.bird-speech-bubble {
+		position: relative;
+		background: hsl(var(--theme-bg));
+		border: 1px solid var(--hairline);
+		padding: 5px 12px;
+		border-radius: 999px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 500;
+		color: hsl(var(--theme-accent));
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+		margin-bottom: 8px;
+		white-space: nowrap;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.speech-tail {
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0;
+		height: 0;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-top: 5px solid hsl(var(--theme-bg));
+	}
+
+	.speech-pop {
+		animation: pop-bounce 0.4s ease;
+	}
+
+	@keyframes pop-bounce {
+		0% {
+			transform: scale(0.9);
+		}
+		50% {
+			transform: scale(1.08);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	/* Bird Interactive Button */
+	.bird-actor {
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0;
+		cursor: pointer;
+		position: relative;
+		outline: none;
+		border-radius: 50%;
+		transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.bird-actor:hover {
+		transform: scale(1.08);
+	}
+
+	.bird-actor:focus-visible {
+		outline: 2px solid hsl(var(--theme-accent));
+		outline-offset: 6px;
+	}
+
+	.bird-svg {
+		width: 125px;
+		height: 90px;
+		overflow: visible;
+		filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+	}
+
+	/* Flapping Wings Keyframes */
+	.wing-front {
+		transform-origin: 65px 52px;
+		animation: flap-front 0.65s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+	}
+
+	.wing-back {
+		transform-origin: 55px 46px;
+		animation: flap-back 0.65s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate 0.05s;
+	}
+
+	@keyframes flap-front {
+		0% {
+			transform: rotate(-24deg) scaleY(1.1);
+		}
+		100% {
+			transform: rotate(26deg) scaleY(0.7) skewX(-8deg);
+		}
+	}
+
+	@keyframes flap-back {
+		0% {
+			transform: rotate(-18deg) scaleY(1.05);
+		}
+		100% {
+			transform: rotate(22deg) scaleY(0.75);
+		}
+	}
+
+	/* Tail gentle flutter */
+	.bird-tail {
+		transform-origin: 40px 52px;
+		animation: tail-wag 1.3s ease-in-out infinite alternate;
+	}
+
+	@keyframes tail-wag {
+		0% {
+			transform: rotate(-3deg);
+		}
+		100% {
+			transform: rotate(4deg);
+		}
+	}
+
+	/* Hanging letter gentle sway */
+	.hanging-letter {
+		transform-origin: 118px 55px;
+		animation: letter-sway 1.3s ease-in-out infinite alternate;
+	}
+
+	@keyframes letter-sway {
+		0% {
+			transform: rotate(-5deg);
+		}
+		100% {
+			transform: rotate(7deg);
+		}
+	}
+
+	/* Sparkles trailing */
+	.sparkle {
+		animation: sparkle-pulse 1.8s ease-in-out infinite;
+	}
+	.sparkle-1 {
+		animation-delay: 0s;
+	}
+	.sparkle-2 {
+		animation-delay: 0.6s;
+	}
+	.sparkle-3 {
+		animation-delay: 1.2s;
+	}
+
+	@keyframes sparkle-pulse {
+		0%, 100% {
+			opacity: 0.15;
+			transform: scale(0.6);
+		}
+		50% {
+			opacity: 0.8;
+			transform: scale(1.2);
+		}
+	}
+
+	/* Stunt Flip Animation when clicked */
+	.stunt-flip {
+		animation: bird-loop-spin 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+	}
+
+	@keyframes bird-loop-spin {
+		0% {
+			transform: scale(1) rotate(0deg);
+		}
+		35% {
+			transform: scale(1.25) translateY(-22px) rotate(-140deg);
+		}
+		70% {
+			transform: scale(1.15) translateY(-8px) rotate(-310deg);
+		}
+		100% {
+			transform: scale(1) translateY(0) rotate(-360deg);
+		}
+	}
+
+	/* Floating Particle Emitters */
+	.bird-particles-container {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 10;
+	}
+
+	:global(.floating-particle) {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		font-size: 16px;
+		pointer-events: none;
+		animation: float-drift 0.95s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+	}
+
+	@keyframes float-drift {
+		0% {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+		}
+		100% {
+			opacity: 0;
+			transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.3) rotate(var(--rot));
+		}
+	}
+
+	/* Status Bar under the sky scene */
+	.flight-status-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 18px;
+		background: hsl(var(--theme-bg));
+		border-top: 1px solid var(--hairline);
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	.flight-status-info {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.flight-pulse-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: hsl(var(--theme-accent));
+		position: relative;
+	}
+
+	.flight-pulse-dot::after {
+		content: "";
+		position: absolute;
+		inset: -3px;
+		border-radius: 50%;
+		border: 1.5px solid hsl(var(--theme-accent));
+		animation: pulse-ring 2s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+	}
+
+	@keyframes pulse-ring {
+		0% {
+			transform: scale(0.7);
+			opacity: 0.9;
+		}
+		100% {
+			transform: scale(2.2);
+			opacity: 0;
+		}
+	}
+
+	.flight-status-text {
+		font-family: var(--font-sans);
+		font-size: 13px;
+		color: hsl(var(--theme-text-muted));
+	}
+
+	.flight-status-text strong {
+		color: hsl(var(--theme-text));
+		font-weight: 600;
+	}
+
+	.cheer-bird-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-accent));
+		background: var(--accent-soft);
+		border: 1px solid hsl(var(--theme-accent) / 0.25);
+		padding: 5px 11px;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+	}
+
+	.cheer-bird-btn:hover {
+		background: var(--accent-soft-strong);
+		border-color: hsl(var(--theme-accent));
+		transform: translateY(-1px);
+	}
+
+	.cheer-bird-btn:active {
+		transform: scale(0.97);
+	}
+
+	.cheer-btn-icon {
+		width: 12px;
+		height: 12px;
+	}
+
+	/* Reduced motion fallback */
+	@media (prefers-reduced-motion: reduce) {
+		.cloud,
+		.wind-current,
+		.bird-flight-track,
+		.wing-front,
+		.wing-back,
+		.bird-tail,
+		.hanging-letter,
+		.sparkle,
+		.flight-pulse-dot::after {
+			animation: none !important;
+		}
+	}
+
+	@media (max-width: 540px) {
+		.sky-scene {
+			height: 160px;
+		}
+		.bird-svg {
+			width: 105px;
+			height: 75px;
+		}
+		.bird-speech-bubble {
+			font-size: 10.5px;
+			padding: 4px 10px;
+		}
+		.flight-status-bar {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+		}
+		.cheer-bird-btn {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>

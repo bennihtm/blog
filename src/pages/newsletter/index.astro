@@ -1,0 +1,665 @@
+---
+import PostList from "@/components/blog/PostList.astro";
+import { getAllPosts, sortMDByDate } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+import { siteConfig } from "@/site-config";
+import { absoluteUrl, withBase } from "@/utils/path";
+import { Icon } from "astro-icon/components";
+import { Schema } from "astro-seo-schema";
+
+const siteUrl = (path: string) => absoluteUrl(path, Astro.site);
+
+const allPosts = await getAllPosts();
+const recentPosts = sortMDByDate(allPosts).slice(0, 3);
+
+const meta = {
+	description:
+		"Subscribe to Benjamin's newsletter for occasional letters and reflections on faith, nature, tech, and quiet observations of life.",
+	title: "Newsletter",
+};
+---
+
+<Schema
+	item={{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{
+				"@type": "ListItem",
+				position: 1,
+				name: "Home",
+				item: siteUrl("/"),
+			},
+			{
+				"@type": "ListItem",
+				position: 2,
+				name: "Newsletter",
+				item: siteUrl("/newsletter"),
+			},
+		],
+	}}
+/>
+
+<PageLayout meta={meta}>
+	<section class="newsletter-page" aria-labelledby="newsletter-heading">
+		<div class="newsletter-badge">
+			<Icon name="lucide:mail" class="newsletter-badge-icon" aria-hidden="true" />
+			<span class="newsletter-eyebrow">Newsletter</span>
+		</div>
+
+		<h1 id="newsletter-heading" class="newsletter-page-title">Letters & Reflections 📬</h1>
+
+		<p class="newsletter-page-lead">
+			Occasional letters about faith, nature, technology, and quiet observations of everyday life. No algorithms, no noise—just thoughtful writing delivered straight to your inbox.
+		</p>
+
+		<div class="subscription-card">
+			<form
+				action="https://buttondown.com/api/emails/embed-subscribe/bennihtm"
+				method="post"
+				target="popupwindow"
+				onsubmit="window.open('https://buttondown.com/bennihtm', 'popupwindow')"
+				class="newsletter-form embeddable-buttondown-form"
+			>
+				<label for="bd-email" class="sr-only">Enter your email address</label>
+				<div class="newsletter-controls">
+					<input
+						type="email"
+						name="email"
+						id="bd-email"
+						placeholder="you@example.com"
+						required
+						class="newsletter-input"
+						autocomplete="email"
+					/>
+					<button type="submit" class="newsletter-submit">
+						<span>Subscribe</span>
+						<Icon name="lucide:arrow-right" class="newsletter-submit-icon" aria-hidden="true" />
+					</button>
+				</div>
+				<div class="newsletter-meta-row">
+					<span class="promise-tag">
+						<Icon name="lucide:shield-check" class="promise-icon" aria-hidden="true" />
+						<span>no spam, unsubscribe anytime</span>
+					</span>
+					<p class="newsletter-footer">
+						<a
+							href="https://buttondown.com/refer/bennihtm"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Powered by Buttondown.
+						</a>
+					</p>
+				</div>
+			</form>
+		</div>
+
+		<div class="pillars-card">
+			<h2 class="section-title">What </h2>
+			<div class="pillars-grid">
+				<div class="pillar-item">
+					<div class="pillar-icon-wrapper">
+						<Icon name="lucide:heart" class="pillar-icon" aria-hidden="true" />
+					</div>
+					<div class="pillar-body">
+						<h3 class="pillar-heading">Faith & Contemplation</h3>
+						<p class="pillar-desc">
+							Quiet meditations on walking with Christ, prayer, and living with purpose in a noisy world.
+						</p>
+					</div>
+				</div>
+
+				<div class="pillar-item">
+					<div class="pillar-icon-wrapper">
+						<Icon name="lucide:trees" class="pillar-icon" aria-hidden="true" />
+					</div>
+					<div class="pillar-body">
+						<h3 class="pillar-heading">Nature & Stillness</h3>
+						<p class="pillar-desc">
+							Observations from time spent outdoors, wandering trails, and finding wonder in creation.
+						</p>
+					</div>
+				</div>
+
+				<div class="pillar-item">
+					<div class="pillar-icon-wrapper">
+						<Icon name="lucide:code-xml" class="pillar-icon" aria-hidden="true" />
+					</div>
+					<div class="pillar-body">
+						<h3 class="pillar-heading">Tech & Digital Craft</h3>
+						<p class="pillar-desc">
+							Notes on web tools, personal computing, open source, and building a mindful digital space.
+						</p>
+					</div>
+				</div>
+
+				<div class="pillar-item">
+					<div class="pillar-icon-wrapper">
+						<Icon name="lucide:book-open" class="pillar-icon" aria-hidden="true" />
+					</div>
+					<div class="pillar-body">
+						<h3 class="pillar-heading">Reading & Essays</h3>
+						<p class="pillar-desc">
+							Highlights from books, curated links, and long-form essays before they appear on the blog.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- RSS & Alternatives Box -->
+		<div class="rss-alt-box">
+			<div class="rss-alt-left">
+				<Icon name="lucide:rss" class="rss-alt-icon" aria-hidden="true" />
+				<div>
+					<span class="rss-alt-title">Prefer RSS instead?</span>
+					<p class="rss-alt-desc">
+						If you prefer using an RSS reader, you can subscribe to the feed directly without an email.
+					</p>
+				</div>
+			</div>
+			<a href={withBase("/rss.xml")} class="rss-btn">
+				<Icon name="lucide:rss" class="rss-btn-icon" aria-hidden="true" />
+				<span>RSS Feed</span>
+			</a>
+		</div>
+	</section>
+</PageLayout>
+
+<style>
+	.newsletter-page {
+		padding: 8px 0 72px;
+		max-width: var(--reading-width);
+	}
+
+	.newsletter-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-accent));
+		background: var(--accent-soft);
+		padding: 3px 10px;
+		border-radius: 999px;
+		margin-bottom: 20px;
+	}
+
+	.newsletter-badge-icon {
+		width: 13px;
+		height: 13px;
+	}
+
+	.newsletter-page-title {
+		font-family: var(--font-serif);
+		font-weight: 500;
+		font-size: clamp(28px, 5.5vw, 40px);
+		letter-spacing: -0.022em;
+		line-height: 1.18;
+		color: hsl(var(--theme-text));
+		margin: 0 0 16px;
+		text-wrap: balance;
+		word-wrap: break-word;
+	}
+
+	.newsletter-page-lead {
+		font-family: var(--font-serif);
+		font-size: 18px;
+		line-height: 1.7;
+		color: hsl(var(--theme-text-muted));
+		margin: 0 0 32px;
+		text-wrap: pretty;
+	}
+
+	/* Subscription Card */
+	.subscription-card {
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		padding: 26px 28px;
+		margin-bottom: 32px;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	.newsletter-form {
+		margin: 0;
+	}
+
+	.newsletter-controls {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.newsletter-input {
+		flex: 1;
+		min-width: 0;
+		font-family: var(--font-sans);
+		font-size: 15px;
+		color: hsl(var(--theme-text));
+		background: hsl(var(--theme-bg));
+		border: 1px solid var(--hairline);
+		border-radius: 4px;
+		padding: 11px 16px;
+		outline: none;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.35s ease;
+	}
+
+	.newsletter-input::placeholder {
+		color: var(--faint);
+		opacity: 0.85;
+	}
+
+	.newsletter-input:focus {
+		border-color: hsl(var(--theme-accent));
+		box-shadow: 0 0 0 1px hsl(var(--theme-accent));
+	}
+
+	.newsletter-submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-bg));
+		background: hsl(var(--theme-accent));
+		border: 1px solid hsl(var(--theme-accent));
+		border-radius: 4px;
+		padding: 11px 20px;
+		cursor: pointer;
+		white-space: nowrap;
+		line-height: 1.4;
+		transition: opacity 0.2s ease, transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.newsletter-submit-icon {
+		width: 14px;
+		height: 14px;
+		transition: transform 0.2s ease;
+	}
+
+	.newsletter-submit:hover {
+		opacity: 0.92;
+	}
+
+	.newsletter-submit:hover .newsletter-submit-icon {
+		transform: translateX(2px);
+	}
+
+	.newsletter-submit:active {
+		transform: scale(0.98);
+	}
+
+	.newsletter-submit:focus-visible {
+		outline: 2px solid hsl(var(--theme-accent));
+		outline-offset: 2px;
+	}
+
+	.newsletter-meta-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-top: 14px;
+	}
+
+	.promise-tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		color: hsl(var(--theme-text) / 0.65);
+	}
+
+	.promise-icon {
+		width: 14px;
+		height: 14px;
+		color: hsl(var(--aside-tip));
+		flex-shrink: 0;
+	}
+
+	.newsletter-footer {
+		font-family: var(--font-sans);
+		font-size: 12px;
+		color: hsl(var(--theme-text) / 0.5);
+		margin: 0;
+	}
+
+	.newsletter-footer a {
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: hsl(var(--theme-text) / 0.25);
+		text-underline-offset: 2px;
+		transition: color 0.2s ease, text-decoration-color 0.2s ease;
+	}
+
+	.newsletter-footer a:hover {
+		color: hsl(var(--theme-accent));
+		text-decoration-color: hsl(var(--theme-accent));
+	}
+
+	/* Personal Note from Author */
+	.personal-note-card {
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-left: 3px solid hsl(var(--theme-accent));
+		border-radius: 6px;
+		padding: 20px 22px;
+		margin-bottom: 36px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	.note-avatar-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: var(--accent-soft);
+		color: hsl(var(--theme-accent));
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.note-feather-icon {
+		width: 16px;
+		height: 16px;
+	}
+
+	.note-content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.note-sender {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-accent));
+		margin-bottom: 6px;
+	}
+
+	.note-text {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 15.5px;
+		line-height: 1.65;
+		color: hsl(var(--theme-text));
+		margin: 0;
+	}
+
+	/* Pillars Card */
+	.pillars-card {
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		padding: 26px 24px;
+		margin-bottom: 36px;
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	.section-title {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-text) / 0.72);
+		margin: 0 0 20px;
+	}
+
+	.pillars-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+	}
+
+	.pillar-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 14px;
+	}
+
+	.pillar-icon-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 6px;
+		background: var(--accent-soft);
+		color: hsl(var(--theme-accent));
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.pillar-icon {
+		width: 16px;
+		height: 16px;
+	}
+
+	.pillar-body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.pillar-heading {
+		font-family: var(--font-serif);
+		font-size: 16.5px;
+		font-weight: 600;
+		color: hsl(var(--theme-text));
+		margin: 0 0 4px;
+		line-height: 1.3;
+	}
+
+	.pillar-desc {
+		font-family: var(--font-sans);
+		font-size: 13.5px;
+		line-height: 1.55;
+		color: hsl(var(--theme-text-muted));
+		margin: 0;
+	}
+
+	/* Sample writing */
+	.sample-posts-section {
+		margin-bottom: 36px;
+	}
+
+	.sample-posts-header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 16px;
+	}
+
+	.sample-posts-icon {
+		width: 14px;
+		height: 14px;
+		color: hsl(var(--theme-accent));
+	}
+
+	.sample-posts-title {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-text) / 0.72);
+		margin: 0;
+	}
+
+	.sample-posts-box {
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		padding: 16px 20px;
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	/* RSS Alt Box */
+	.rss-alt-box {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		padding: 18px 22px;
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	.rss-alt-left {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+	}
+
+	.rss-alt-icon {
+		width: 22px;
+		height: 22px;
+		color: hsl(var(--theme-accent));
+		flex-shrink: 0;
+	}
+
+	.rss-alt-title {
+		display: block;
+		font-family: var(--font-serif);
+		font-size: 16px;
+		font-weight: 600;
+		color: hsl(var(--theme-text));
+		margin-bottom: 2px;
+	}
+
+	.rss-alt-desc {
+		font-family: var(--font-sans);
+		font-size: 13.5px;
+		line-height: 1.5;
+		color: hsl(var(--theme-text-muted));
+		margin: 0;
+	}
+
+	.rss-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-text));
+		background: var(--accent-soft);
+		border: 1px solid var(--hairline);
+		border-radius: 4px;
+		padding: 8px 14px;
+		text-decoration: none;
+		white-space: nowrap;
+		flex-shrink: 0;
+		transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+	}
+
+	.rss-btn-icon {
+		width: 13px;
+		height: 13px;
+	}
+
+	.rss-btn:hover {
+		border-color: hsl(var(--theme-accent));
+		color: hsl(var(--theme-accent));
+		transform: translateY(-1px);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
+
+	@media (max-width: 640px) {
+		.newsletter-page {
+			padding-bottom: 48px;
+		}
+
+		.newsletter-page-title {
+			font-size: 26px;
+		}
+
+		.newsletter-page-lead {
+			font-size: 16px;
+			margin-bottom: 24px;
+		}
+
+		.subscription-card {
+			padding: 20px 16px;
+		}
+
+		.newsletter-controls {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 10px;
+		}
+
+		.newsletter-submit {
+			width: 100%;
+			padding: 11px 16px;
+		}
+
+		.newsletter-meta-row {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 6px;
+		}
+
+		.personal-note-card {
+			padding: 16px;
+			gap: 12px;
+		}
+
+		.pillars-card {
+			padding: 20px 16px;
+		}
+
+		.pillars-grid {
+			grid-template-columns: 1fr;
+			gap: 18px;
+		}
+
+		.rss-alt-box {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 16px;
+			gap: 14px;
+		}
+
+		.rss-btn {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>

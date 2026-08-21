@@ -1,0 +1,249 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Subscribe to the newsletter",
+	description = "Get new posts and updates delivered directly to your inbox. No spam, unsubscribe anytime.",
+} = Astro.props;
+---
+
+<aside class="newsletter-callout" aria-labelledby="newsletter-heading">
+	<div class="newsletter-header">
+		<div class="newsletter-badge">
+			<Icon name="lucide:mail" class="newsletter-badge-icon" aria-hidden="true" />
+			<span class="newsletter-eyebrow">Newsletter</span>
+		</div>
+		<h2 id="newsletter-heading" class="newsletter-title">{title}</h2>
+		{description && <p class="newsletter-desc">{description}</p>}
+	</div>
+
+	<form
+		action="https://buttondown.com/api/emails/embed-subscribe/bennihtm"
+		method="post"
+		target="popupwindow"
+		onsubmit="window.open('https://buttondown.com/bennihtm', 'popupwindow')"
+		class="newsletter-form embeddable-buttondown-form"
+	>
+		<label for="bd-email" class="sr-only">Enter your email</label>
+		<div class="newsletter-controls">
+			<input
+				type="email"
+				name="email"
+				id="bd-email"
+				placeholder="you@example.com"
+				required
+				class="newsletter-input"
+				autocomplete="email"
+			/>
+			<button type="submit" class="newsletter-submit">
+				<span>Subscribe</span>
+				<Icon name="lucide:arrow-right" class="newsletter-submit-icon" aria-hidden="true" />
+			</button>
+		</div>
+		<p class="newsletter-footer">
+			<a
+				href="https://buttondown.com/refer/bennihtm"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Powered by Buttondown.
+			</a>
+		</p>
+	</form>
+</aside>
+
+<style>
+	.newsletter-callout {
+		max-width: var(--reading-width);
+		margin: 44px 0 0;
+		padding: 24px 28px;
+		background: var(--paper);
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		transition: background-color 0.35s ease, border-color 0.35s ease;
+	}
+
+	.newsletter-header {
+		margin-bottom: 18px;
+	}
+
+	.newsletter-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-accent));
+		background: var(--accent-soft);
+		padding: 3px 9px;
+		border-radius: 999px;
+		margin-bottom: 10px;
+	}
+
+	.newsletter-badge-icon {
+		width: 12px;
+		height: 12px;
+	}
+
+	.newsletter-title {
+		font-family: var(--font-serif);
+		font-size: 21px;
+		font-weight: 500;
+		line-height: 1.25;
+		letter-spacing: -0.012em;
+		color: hsl(var(--theme-text));
+		margin: 0 0 6px;
+	}
+
+	.newsletter-desc {
+		font-family: var(--font-sans);
+		font-size: 14.5px;
+		line-height: 1.55;
+		color: hsl(var(--theme-text-muted));
+		margin: 0;
+	}
+
+	.newsletter-form {
+		margin: 0;
+	}
+
+	.newsletter-controls {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.newsletter-input {
+		flex: 1;
+		min-width: 0;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		color: hsl(var(--theme-text));
+		background: hsl(var(--theme-bg));
+		border: 1px solid var(--hairline);
+		border-radius: 4px;
+		padding: 9px 14px;
+		outline: none;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.35s ease;
+	}
+
+	.newsletter-input::placeholder {
+		color: var(--faint);
+		opacity: 0.85;
+	}
+
+	.newsletter-input:focus {
+		border-color: hsl(var(--theme-accent));
+		box-shadow: 0 0 0 1px hsl(var(--theme-accent));
+	}
+
+	.newsletter-submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: hsl(var(--theme-bg));
+		background: hsl(var(--theme-accent));
+		border: 1px solid hsl(var(--theme-accent));
+		border-radius: 4px;
+		padding: 9px 16px;
+		cursor: pointer;
+		white-space: nowrap;
+		line-height: 1.4;
+		transition: opacity 0.2s ease, transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.newsletter-submit-icon {
+		width: 13px;
+		height: 13px;
+		transition: transform 0.2s ease;
+	}
+
+	.newsletter-submit:hover {
+		opacity: 0.9;
+	}
+
+	.newsletter-submit:hover .newsletter-submit-icon {
+		transform: translateX(2px);
+	}
+
+	.newsletter-submit:active {
+		transform: scale(0.98);
+	}
+
+	.newsletter-submit:focus-visible {
+		outline: 2px solid hsl(var(--theme-accent));
+		outline-offset: 2px;
+	}
+
+	.newsletter-footer {
+		font-family: var(--font-sans);
+		font-size: 11.5px;
+		color: hsl(var(--theme-text) / 0.5);
+		margin: 10px 0 0;
+	}
+
+	.newsletter-footer a {
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: hsl(var(--theme-text) / 0.25);
+		text-underline-offset: 2px;
+		transition: color 0.2s ease, text-decoration-color 0.2s ease;
+	}
+
+	.newsletter-footer a:hover {
+		color: hsl(var(--theme-accent));
+		text-decoration-color: hsl(var(--theme-accent));
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
+
+	@media (max-width: 540px) {
+		.newsletter-callout {
+			margin-top: 36px;
+			padding: 20px 16px;
+		}
+
+		.newsletter-title {
+			font-size: 18.5px;
+		}
+
+		.newsletter-desc {
+			font-size: 13.5px;
+		}
+
+		.newsletter-controls {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 10px;
+		}
+
+		.newsletter-submit {
+			width: 100%;
+			padding: 10px 16px;
+		}
+	}
+</style>
