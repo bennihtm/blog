@@ -3,7 +3,7 @@ title: "Gratitude Day 1: I'm grateful for music"
 publishDate: 2026-09-14
 description: "The start of my gratitude post series"
 ---
-I was reading one of [rldane]()'s [30 Days of Gratitude](https://rldane.space/a-september-theme-30-days-of-gratitude.html) posts and it inspired me to write my own.
+I was reading one of [rldane](https://rldane.space/)'s [30 Days of Gratitude](https://rldane.space/a-september-theme-30-days-of-gratitude.html) posts and it inspired me to write my own.
 
 This blog has been stagnant for quite some time anyway (read: never got off the ground) and thinking and writing about the things I'm grateful for seems like a fairly easy thing to do while not being completely uninteresting to whomever will read this (hi benni from the future 🙋🏻‍♂️).
 
@@ -18,7 +18,9 @@ Music has had a big impact on my life. It has continually accompanied me through
 The first time I remember listening to music was when I was eight or nine years old.
 My sister had come back from a vacation in Turkey and she got me a small Beats Bluetooth speaker. It looked similar to this one, except mine had a RGB LED ring at the top:
 
+
 ![A picture of a Beats Bluetooth speaker that is round but flat on the top and bottom, it has the Beats "b" on the top.](./_assets/28a475171b1532d1c6885a57b21785bb.jpg)
+
 
 My brother wanted to test the sound quality and played [About A Mile's "Trust You All The Way"](https://www.youtube.com/watch?v=u4p7-zlyQ9M) — the first song I actively listened to.
 
