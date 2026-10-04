@@ -4,6 +4,9 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - astro@7.2.1
+  - cssnano-preset-default@9.2.2
+  - cssnano@9.2.2
+  - postcss-merge-rules@9.0.8
 
 overrides:
   sharp: ^0.35.3

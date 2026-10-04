@@ -3,6 +3,7 @@ import { type CollectionEntry, render } from "astro:content";
 import { Image } from "astro:assets";
 
 import ShareButtons from "@/components/blog/ShareButtons.astro";
+import Mermaid from "@/components/blog/Mermaid.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import { siteConfig } from "@/site-config";
@@ -123,6 +124,7 @@ const giscusThemes = import.meta.env.PROD
 			<article class="post-article">
 				<slot />
 			</article>
+			<Mermaid />
 
 			<ShareButtons title={title} url={postUrl} description={description} />
 
@@ -461,7 +463,20 @@ const giscusThemes = import.meta.env.PROD
 		word-wrap: break-word;
 		overflow-wrap: anywhere;
 	}
-
+	.post-article > p + p {
+		text-indent: 1.5em;
+	}
+	.post-article > p:first-of-type::first-letter {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 500;
+		color: hsl(var(--theme-accent));
+		float: left;
+		font-size: 3.6em;
+		line-height: 0.92;
+		padding: 4px 10px 0 0;
+		margin-top: 4px;
+	}
 	.post-article p em,
 	.post-article em {
 		font-style: italic;
@@ -615,7 +630,6 @@ const giscusThemes = import.meta.env.PROD
 	}
 	.post-article ul ul li {
 		font-size: 17px;
-		color: hsl(var(--theme-text-muted));
 		margin-bottom: 6px;
 	}
 	.post-article ul ul li::before {
