@@ -48,7 +48,7 @@
 		"rehype-katex": "^7.0.1",
 		"remark-directive": "^4.0.0",
 		"remark-math": "^6.0.0",
-		"satori": "0.26.0",
+		"satori": "0.33.5",
 		"satori-html": "^0.3.2",
 		"schema-dts": "^1.1.5",
 		"sharp": "^0.35.4",
