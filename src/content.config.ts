@@ -21,11 +21,16 @@ const post = defineCollection({
 				.optional(),
 			description: z.string().max(160),
 			draft: z.boolean().default(false),
+			externalUrl: z.url().optional(),
 			ogImage: z.string().optional(),
 			publishDate: z.coerce.date(),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			title: z.string().max(120),
-			updatedDate: z.coerce.date().optional(),
+			updatedDate: z
+				.string()
+				.or(z.date())
+				.optional()
+				.transform((val) => (val ? new Date(val) : undefined)),
 		}),
 });
 

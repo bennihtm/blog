@@ -4,8 +4,9 @@ import { Image } from "astro:assets";
 
 import ShareButtons from "@/components/blog/ShareButtons.astro";
 import Mermaid from "@/components/blog/Mermaid.astro";
+import katexStylesheet from "katex/dist/katex.min.css?url";
 import WebMentions from "@/components/blog/webmentions/index.astro";
-import { getAllPosts, sortMDByDate } from "@/data/post";
+import { getAllPosts, getPostHref, getPostSortDate, sortMDByDate } from "@/data/post";
 import { siteConfig } from "@/site-config";
 import { formatBylineDate, formatEyebrowDate } from "@/utils/date";
 import { absoluteUrl, withBase } from "@/utils/path";
@@ -28,8 +29,10 @@ const {
 	id: slug,
 } = post;
 const socialImage = ogImage ?? `/og-image/${slug}.png`;
-const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
+const articleDate = publishDate.toISOString();
+const articleModified = updatedDate?.toISOString();
 const { remarkPluginFrontmatter } = await render(post);
+const { hasMath, hasMermaid } = remarkPluginFrontmatter as { hasMath?: boolean; hasMermaid?: boolean };
 
 const authorName = siteConfig.profile?.name ?? siteConfig.author;
 const comments = siteConfig.comments;
@@ -49,30 +52,32 @@ const readingTime: string =
 // Custom giscus themes only in prod: the giscus.app iframe can't fetch CSS from localhost / private IPs.
 const giscusThemes = import.meta.env.PROD
 	? {
-			light: new URL("/giscus-light.css", Astro.site).toString(),
-			dark: new URL("/giscus-dark.css", Astro.site).toString(),
+			light: absoluteUrl("/giscus-light.css", Astro.site),
+			dark: absoluteUrl("/giscus-dark.css", Astro.site),
 		}
 	: { light: "noborder_light", dark: "noborder_dark" };
 ---
 
-<Schema
-	item={{
-		"@context": "https://schema.org",
-		"@type": "BlogPosting",
-		headline: title,
-		datePublished: articleDate,
-		dateModified: updatedDate?.toISOString(),
-		url: postUrl,
-		image: socialImageAbsolute,
-		author: {
-			"@type": "Person",
-			name: authorName,
-		},
-		description: description,
-	}}
-/>
-
-<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
+<BaseLayout meta={{ articleDate, articleModified, description, ogImage: socialImage, title }}>
+	{hasMath && <link rel="stylesheet" href={katexStylesheet} slot="head" />}
+	{hasMermaid && <Mermaid slot="head" />}
+	<Schema
+		slot="head"
+		item={{
+			"@context": "https://schema.org",
+			"@type": "BlogPosting",
+			headline: title,
+			datePublished: articleDate,
+			dateModified: articleModified,
+			url: postUrl,
+			image: socialImageAbsolute,
+			author: {
+				"@type": "Person",
+				name: authorName,
+			},
+			description: description,
+		}}
+	/>
 	<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
 	<div class="post-shell">
 		<div class="post-main" data-pagefind-body>
@@ -124,7 +129,6 @@ const giscusThemes = import.meta.env.PROD
 			<article class="post-article">
 				<slot />
 			</article>
-			<Mermaid />
 
 			<ShareButtons title={title} url={postUrl} description={description} />
 
@@ -135,13 +139,13 @@ const giscusThemes = import.meta.env.PROD
 			{(olderPost || newerPost) && (
 				<nav class="post-pager" aria-label="More posts">
 					{olderPost && (
-						<a class="pager-link prev" data-astro-prefetch href={withBase(`/posts/${olderPost.id}/`)}>
+						<a class="pager-link prev" data-astro-prefetch href={getPostHref(olderPost)}>
 							<span class="pager-eyebrow">Older</span>
 							<span class="pager-title">{olderPost.data.title}</span>
 						</a>
 					)}
 					{newerPost && (
-						<a class="pager-link next" data-astro-prefetch href={withBase(`/posts/${newerPost.id}/`)}>
+						<a class="pager-link next" data-astro-prefetch href={getPostHref(newerPost)}>
 							<span class="pager-eyebrow">Newer</span>
 							<span class="pager-title">{newerPost.data.title}</span>
 						</a>
@@ -694,7 +698,7 @@ const giscusThemes = import.meta.env.PROD
 		border: 1px solid var(--hairline);
 		background: var(--paper);
 	}
-	@media (prefers-reduced-motion: no-preference) {
+	@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
 		.post-article img[loading="lazy"]:not([data-in]) {
 			opacity: 0;
 		}
@@ -763,11 +767,13 @@ const giscusThemes = import.meta.env.PROD
 		margin-right: 8px;
 	}
 
+	.post-article .table-scroll {
+		margin: 28px 0;
+		overflow-x: auto;
+	}
 	.post-article table {
 		width: 100%;
-		max-width: 100%;
 		border-collapse: collapse;
-		margin: 28px 0;
 		font-size: 15.5px;
 		font-family: var(--font-sans);
 	}
