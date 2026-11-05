@@ -239,6 +239,9 @@ importers:
       astro-webmanifest:
         specifier: ^1.0.0
         version: 1.0.0(@types/node@26.1.2)
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       hastscript:
         specifier: ^9.0.1
         version: 9.0.1

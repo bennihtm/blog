@@ -16,7 +16,10 @@ import remarkMath from "remark-math";
 import { rehypeBasePath } from "./src/plugins/rehype-base-path";
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
+import { rehypeTableScroll } from "./src/plugins/rehype-table-scroll";
+import { getExternalPostIds, getPostLastModified } from "./src/utils/sitemap";
 import { remarkMermaid } from "./src/plugins/remark-mermaid";
+import { remarkHasMath } from "./src/plugins/remark-has-math";
 
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeKatex from "rehype-katex";
@@ -26,6 +29,8 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 // (GitHub Pages project sites). See "Base path" in the README.
 const BASE_PATH = process.env.BASE_PATH || "/";
 const START_URL = BASE_PATH.endsWith("/") ? BASE_PATH : `${BASE_PATH}/`;
+const postLastModified = getPostLastModified();
+const externalPostIds = getExternalPostIds();
 
 export default defineConfig({
 	site: "https://bennihtm.xyz",
@@ -44,7 +49,18 @@ export default defineConfig({
 		sitemap({
 			changefreq: "weekly",
 			priority: 0.7,
-			lastmod: new Date(),
+			filter(page) {
+				const path = new URL(page).pathname.slice(START_URL.length);
+				const id = path.match(/^posts\/(.+?)\/?$/)?.[1];
+				return !(id && externalPostIds.has(decodeURIComponent(id)));
+			},
+			serialize(item) {
+				const path = new URL(item.url).pathname.slice(START_URL.length);
+				const id = path.match(/^posts\/(.+?)\/?$/)?.[1];
+				const lastmod = id && postLastModified.get(decodeURIComponent(id));
+				if (lastmod) item.lastmod = lastmod.toISOString();
+				return item;
+			},
 		}),
 		mdx(),
 		robotsTxt(),
@@ -72,8 +88,8 @@ export default defineConfig({
 				},
 			],
 			start_url: START_URL,
-			background_color: "#1d1f21",
-			theme_color: "#2bbc8a",
+			background_color: "#f6f1e6",
+			theme_color: "#f6f1e6",
 			display: "standalone",
 			config: {
 				insertFaviconLinks: false,
@@ -89,6 +105,7 @@ export default defineConfig({
 		processor: unified({
 			rehypePlugins: [
 				rehypeUnwrapImages,
+				rehypeTableScroll,
 				[rehypeBasePath, { base: BASE_PATH }],
 				// rehype-katex must run before rehype-external-links so the latter
 				// doesn't rewrite anchors inside katex's emitted DOM.
@@ -96,12 +113,19 @@ export default defineConfig({
 				[
 					rehypeExternalLinks,
 					{
-						rel: ["nofollow, noreferrer"],
+						rel: ["nofollow", "noreferrer"],
 						target: "_blank",
 					},
 				],
 			],
-			remarkPlugins: [remarkMermaid, remarkReadingTime, remarkDirective, remarkAdmonitions, remarkMath],
+			remarkPlugins: [
+				remarkMermaid,
+				remarkReadingTime,
+				remarkDirective,
+				remarkAdmonitions,
+				remarkMath,
+				remarkHasMath,
+			],
 			remarkRehype: {
 				footnoteLabelProperties: {
 					className: [""],
@@ -113,6 +137,7 @@ export default defineConfig({
 	prefetch: true,
 	vite: {
 		optimizeDeps: {
+			include: ["mermaid"],
 			exclude: ["@resvg/resvg-js"],
 		},
 		plugins: [tailwindcss(), rawFonts([".ttf", ".woff"])],
