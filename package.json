@@ -40,7 +40,7 @@
 		"astro-webmanifest": "^1.0.0",
 		"github-slugger": "^2.0.0",
 		"hastscript": "^9.0.1",
-		"katex": "^0.18.2",
+		"katex": "^0.19.0",
 		"mdast-util-directive": "^3.1.1",
 		"mdast-util-to-markdown": "^2.2.0",
 		"mdast-util-to-string": "^4.0.0",
