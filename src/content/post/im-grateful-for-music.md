@@ -1,7 +1,8 @@
 ---
-title: "Gratitude Day 1: I'm grateful for music"
+title: "Gratitude: I'm grateful for music"
 publishDate: 2026-09-14
 description: "The start of my gratitude post series"
+tags: ["gratitude"]
 ---
 I was reading one of [rldane](https://rldane.space/)'s [30 Days of Gratitude](https://rldane.space/a-september-theme-30-days-of-gratitude.html) posts and it inspired me to write my own.
 
