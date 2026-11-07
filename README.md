@@ -1,31 +1,4 @@
-# Astro Sienna
-
-A minimal Astro blog template with serif typography, dark mode, RSS, OG images, and optional Giscus comments and
-analytics.
-
-**Live demo:** [Github Pages](https://anjay-goel.github.io/astro-sienna)
-
-![Astro Sienna home page in dark and light themes](.github/assets/preview.png)
-
-## Features
-
-- Astro 7 with content collections (posts and pages, both validated by Zod)
-- MDX support — embed Astro/JSX components, imports, and JS expressions inside posts
-- Mermaid diagrams in Markdown and MDX, loaded when a diagram approaches the viewport
-- Light and dark mode with a CSS-only theme toggle
-- Self-hosted serif body font ([Newsreader](https://github.com/productiontype/Newsreader)) and mono (JetBrains Mono)
-- Code blocks via [astro-expressive-code](https://expressive-code.com): themes, copy button, terminal frames, line
-  highlighting
-- Math via KaTeX (`$inline$` and `$$display$$`)
-- Custom containers (`:::note`, `:::tip`, `:::caution`)
-- Tag pages — post tags link to per-tag archives, with a browsable `/tags/` index
-- Per-post OG images generated at build time (Satori + resvg)
-- RSS feed, sitemap, robots.txt, web manifest
-- Optional [Giscus](https://giscus.app) comments with custom matched themes
-- Optional GA4 and Goatcounter analytics, both loaded via [Partytown](https://partytown.qwik.dev/) so they run on a
-  worker thread
-- Optional [webmentions](https://webmention.io), fetched at build and cached locally
-- Perfect Lighthouse scores (Performance, Accessibility, Best Practices, SEO)
+# blog
 
 ## Quick start
 
@@ -94,27 +67,6 @@ tags: [ tag-one, tag-two ]
 ---
 ```
 
-### Diagrams
-
-Use a `mermaid` fence in a Markdown or MDX post:
-
-````markdown
-```mermaid
-flowchart LR
-    accTitle: Publishing a post
-    accDescr: Write a draft, preview it locally, then publish it.
-    A[Draft] --> B[Preview] --> C[Publish]
-```
-````
-
-Diagrams follow the site's light/dark theme. Mermaid loads locally from the built assets when a diagram comes near
-the viewport. Posts without diagrams only run a small loader; they do not download Mermaid or register its observers.
-Without JavaScript, the diagram source remains readable. Invalid diagrams also keep their source and log an error.
-Wide diagrams scroll horizontally on small screens. Use `accTitle` and `accDescr` for screen-reader descriptions.
-
-The about page is also markdown, at `src/content/page/about.md`. Showcase entries are typed objects in
-`src/data/showcase.ts`; empty the array and the Showcase tab is hidden automatically.
-
 ## Project layout
 
 ```
@@ -132,42 +84,6 @@ src/
   styles/global.css     # design tokens and shared utilities
 public/                 # static assets served at site root
 ```
-
-## Theming
-
-Design tokens are CSS variables at the top of `src/styles/global.css`: accent colour, hairline, surfaces, fonts.s The
-light and dark variants are gated by `[data-theme="light"]` and `[data-theme="dark"]` on the `<html>` element, so
-swapping them is a single re-render with no script.
-
-Code-block themes are configured separately in `expressiveCodeOptions` in `site.config.ts` (defaults: `min-light` and
-`min-dark`).
-
-## Deploying
-
-Output is a static `dist/` directory that deploys anywhere serving files: Cloudflare Pages, Netlify, Vercel, GitHub
-Pages, S3 + CloudFront. Build command: `pnpm build`. Output directory: `dist`.
-
-### Base path
-
-Defaults to root (`/`) — no config needed for local dev, Netlify, Vercel, Cloudflare Pages, a custom domain, or a
-GitHub Pages **user** site. The whole site (links, assets, feeds, OG/canonical, manifest, Markdown links) is base-aware.
-
-For a GitHub Pages **project** site (served from `/repo/`), the bundled `.github/workflows/deploy.yml` detects the
-subpath and configures it automatically; the only manual step is **Settings → Pages → Source: GitHub Actions**. For a
-subpath on any other host, build with `BASE_PATH=/sub pnpm build`.
-
-## Pulling theme updates
-
-To keep tracking upstream changes after you've forked, add this repo as a second remote:
-
-```sh
-git remote add theme https://github.com/anjay-goel/astro-sienna.git
-git fetch theme
-git merge theme/main --allow-unrelated-histories
-```
-
-Use `.gitattributes` with a `merge=ours` driver on personal-content paths (e.g. `src/content/post/*`,
-`src/site.config.ts`, `public/avatar.png`) to keep your changes through the merge.
 
 ## Credits
 Theme adapted from [astro-sienna](https://github.com/anjay-goel/astro-sienna).
