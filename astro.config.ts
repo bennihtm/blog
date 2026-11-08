@@ -137,7 +137,7 @@ export default defineConfig({
 	prefetch: true,
 	vite: {
 		optimizeDeps: {
-			include: ["mermaid"],
+			include: ["pele"],
 			exclude: ["@resvg/resvg-js"],
 		},
 		plugins: [tailwindcss(), rawFonts([".ttf", ".woff"])],
